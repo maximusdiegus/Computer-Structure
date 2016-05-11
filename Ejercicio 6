@@ -1,0 +1,55 @@
+ 		 .data
+ cadena1:	 .asciiz "Introduce un numero: "
+ cadena2:	 .asciiz "El numero más alto introducido es: "
+ cadena3:	 .asciiz "\n--Fin del programa--\n" 
+ cadena4:	 .asciiz "El vector introducido es: "
+ cadena5:	 .asciiz " "
+ v: 		 .space  20
+ 		 .text
+  
+ 		 main:
+
+ # Cantidad de elementos del vector
+ li $t1,5
+ # Valor de i
+ li $t0,0
+ # Comienzo del bucle
+ bucle:
+ bge $t0,$t1,vector		# for($t0=0; $t0<=5($t1); $t0++)
+ # Interior del bucle for
+ li $v0,4			# Mostramos por pantalla el mensaje de la cadena1
+ la $a0, cadena1
+ syscall
+ li $v0, 5			# Dejamos que el usuario introduzca un numero por pantalla
+ syscall
+ sll $t3, $t0,2 		# i*4
+ sb  $v0, v($t3)		# v[i] 
+ add $t0,$t0,1
+ j bucle
+ 
+ vector:
+ li $v0, 4
+ la $a0, cadena4
+ syscall
+ #Longitud del array
+ li $t1,4			# i<5
+ #Indice del array
+ move $t0,$zero			# i=0
+ # Inicio del bucle que recorrerá el vector y lo mostrará por pantalla 
+ bucle2:
+ bgt $t0, $t1,fin_bucle		# para verificar que se ha introducido corrrectamente los numero pedidos anteriormente
+ sll $t3, $t0, 2
+ lb $a0, v($t3)
+ li $v0, 1
+ syscall
+ # Separación de los numeros para que no se junten
+ la $a0, cadena5
+ li $v0,4
+ syscall
+ addi $t0, $t0,1
+ j bucle2
+ 
+ fin_bucle:
+ li $v0, 4
+ la $a0, cadena3
+ syscall

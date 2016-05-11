@@ -1,0 +1,58 @@
+		.data 
+dato1: 		.word 40 
+dato2: 		.word -2 
+array: 		.word -4,21,37,50,-70,-7,77,56,200,-1,5,8,25,3920,-1000,0 
+string:		.asciiz "Esto es una cadena y lo siguiente es un número\n"
+string1:	.asciiz "Número de numeros negativos: "
+char: 		.byte 'B' 
+charB: 		.byte 66 
+		.globl main 
+		.text 
+		
+main: 		
+		#Longitud del array
+		li $t1,16		# Cargamos en $t1 16
+		#Indice del array
+		move $t0,$zero
+		#inicio del bucle
+		bucle:			# Etiqueta que inicia el bucle 
+		bge $t0,$t1,fin_bucle 	#Si $t0 es mayor o igual que $t1 entonces salta a la etiqueta fin_bucle
+		#bloque for
+		sll $t3,$t0,2		#Desplazamiento logico de 2 bits de $t0. Se almacena en $t3
+		lw $t4,array($t3)	# En $t4 se carga el equivalente en c++ v[i]
+		#condición
+		lw $t5,array($t3)	# En $t5 se carga el equivalente en c++ v[i]
+		bgez $t5,fin_if		# Si $t5 es mayor o igual a 0 entonces saltará a la etiqueta fin_if que es el final de la condición
+		addi $t7,$t7,1 		# En c++ sería la variable contador
+		fin_if:
+		#fin de la condición
+		addi $t0,$t0,1		# Comparacion puesta para que el a $t0 se le sume +1 y así poder hacer arriba la comparacion por si el bucle tiene que continuar o no
+		j bucle			# Salto a la etiqueta bucle que inicia el bucle
+		fin_bucle:		# Etiqueta que finaliza el bucle
+		la $a0,string1		# Cargamos el mensaje de string1 en $a0	
+		li $v0,4		# Y le decimos al programa que lo muestre por pantalla
+		syscall
+		move $a0,$t7		# Movemos nuestro contador llamado $t7 a $a0
+		li $v0,1		# Y lo mostramos por pantalla
+		syscall
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

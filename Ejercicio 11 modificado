@@ -1,0 +1,39 @@
+		.data 
+dato0:		.word 20
+dato1: 		.word 20 
+dato2: 		.word -2 
+array: 		.word -4,21,37,50,70,-7,77,56,200,-1,5,8,25,3920,-1000,0 
+string:		.asciiz "Esto es una cadena y lo siguiente es un número\n"
+string1:	.asciiz
+char: 		.byte 'B' 
+charB: 		.byte 66 
+		.globl main 
+		.text 
+		
+main: 		
+		
+		lw $a0,dato0
+		lw $a1,dato1
+		li $v0,8
+		syscall
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

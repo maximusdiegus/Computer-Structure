@@ -1,0 +1,70 @@
+		.data 
+dato1: 		.word 40 
+dato2: 		.word -2 
+array: 		.word -4,21,37,50,70,-7,77,56,200,-1,5,8,25,3920,-1000,0 
+string:		.asciiz "Esto es una cadena y lo siguiente es un número\n" 
+string1:        .asciiz 
+char: 		.byte 'B' 
+charB: 		.byte 66 
+		.globl main 
+		.text 
+		
+main: 		
+		lw $a0,dato2 
+		sw $a0,256($1)
+		lw $a1,dato1
+		sw $a1,256($1)
+		la $a0,string # Mostramos por consola una cadena 
+		li $v0,4 
+		syscall
+		lw $a0,dato1 # Cargamos un entero desde el segmento de datos 
+		li $v0,1 # Y lo mostramos por consola 
+		syscall
+		li $v0,5 # leemos un entero introducido por teclado syscall
+		move $a0,$v0 
+		li $v0,1 # y lo mostramos por consola 
+		syscall 
+		li $t1,0 # Muestra un elemento desde un array de enteros
+		lw $a0,array($t1) 
+		li $v0,1 
+		syscall 
+		lb $a0,char # Mostramos un carácter desde el segmento de datos 
+		li $v0,11
+		syscall 
+		lb $a0,charB # Mostramos un carácter desde el segmento de datos
+		li $v0,11
+		syscall 
+		li $t2,2 # Mostramos un carácter de una cadena de datos 
+		lb $a0,string($t2) 
+		li $v0,11 
+		syscall 
+		li $v0,8 # Leemos una cadena de caracteres 
+		la $a0,string1 
+		li $a1,9 
+		syscall 
+		li $v0,4 # La mostramos por consola 
+		syscall 
+		li $v0,10 # Fin del programa # 
+		syscall
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,61 @@
+		.data 
+dato1: 		.word 40 
+dato2: 		.word -2 
+array: 		.word -4,21,37,50,70,-7,77,56,200,-1,5,8,25,3920,-1000,0 
+string:		.asciiz "Esto es una cadena y lo siguiente es un número\n"
+string1:	.asciiz "Número de numeros impares: "
+char: 		.byte 'B' 
+charB: 		.byte 66 
+		.globl main 
+		.text 
+		
+main: 		
+		#Longitud del array
+		li $t1,16		# i<16
+		#Indice del array
+		move $t0,$zero		# i=0
+		#inicio del bucle
+		bucle:
+		bge $t0,$t1,fin_bucle	# si $t0>$t1 entonces va a fin_bucle que es el final del bucle
+		#bloque for
+		sll $t3,$t0,2		# El desplazamiento que sufre i, en este caso i++
+		lw $t4,array($t3)	# En $t4 se carga el equivalente en c++ v[i]
+		#condición
+		lw $t5,array($t3)	# En $t5 se carga el equivalente en c++ v[i]
+		li $t8, 2		# Cargamos en $t8 el numero 2 
+		div  $t5, $t8		# El 2 cargado en el registro $t8 nos sirve para dividir entre los numero del array y saber si es par o no
+		mfhi $t6		# Como el resto se encuentra en HI, lo cargamos en $t6
+		beqz $t6,fin_if		# Comparamos, si $t6 es igual a 0 quiere decir que el numero es par y por tanto no cumple nuestra condición y se sale del if sin sumar +1 al registro $t7
+		addi $t7,$t7,1 		# En C++ sería la variable contador 
+		fin_if:
+		#fin de la condición
+		addi $t0,$t0,1 		# Comparacion puesta para que el a $t0 se le sume +1 y así poder hacer arriba la comparacion por si el bucle tiene que continuar o no
+		j bucle			# Salto del bucle hacia la etiqueta bucle que está al pricipio
+		fin_bucle:
+		la $a0,string1		# Carga la etiqueta string1 en $a0, contiene el mensaje
+		li $v0,4		# Le decimos al programa que queremos mostrar por pantalla string1
+		syscall
+		move $a0,$t7		# Nuestro contador de numero impares ($t7) lo cargamos en $a0
+		li $v0,1		# Y lo mostramos por pantalla
+		syscall
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
